@@ -13,12 +13,12 @@ class Covid19Api{
     "Content-Type": "application/json"
   };
 
-  Future<List<CountryHeader>> getCountryHeaders() async{
+  Future<List<CountryHeader>> getCountries() async{
     final response = await http.get(
       baseRoute + "/countries",
       headers: defaultHeaders
     );
-    List<Map<String, dynamic>> aux = json.decode(response.body) as List<Map<String, dynamic>>;
+    List<dynamic> aux = json.decode(response.body);
     List<CountryHeader> data = List();
     aux.forEach((element) => data.add(CountryHeader.fromJson(element)));
     return data;
@@ -26,11 +26,21 @@ class Covid19Api{
 
   ///live/country/brazil/status/confirmed/date/2020-04-21T13:13:30Z
   Future<CountryInfo> getCountryInfo({String country}) async{
-    DateTime dateTime = DateTime.now();
+    print("a");
+    DateTime nowTime = DateTime.now();
+    DateTime auxTime = DateTime(nowTime.year, nowTime.month, nowTime.day - 1);
+    String dateTime = auxTime.toIso8601String();
+    dateTime = dateTime.substring(0, dateTime.length - 4);
+    dateTime = dateTime + "Z";
+    print(dateTime);
+    print("b");
     final response = await http.get(
-      baseRoute + "/live/country/$country/status/confirmed/date/${dateTime.toString()}",
+      baseRoute + "/live/country/$country/status/confirmed/date/$dateTime",
       headers: defaultHeaders
     );
-    return CountryInfo.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    print("c");
+    List<dynamic> aux = json.decode(response.body);
+    print(aux.length);
+    return CountryInfo.fromJson(aux[0]);
   }
 }

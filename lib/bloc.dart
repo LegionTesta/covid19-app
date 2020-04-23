@@ -11,20 +11,21 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   CountryInfo countryInfo;
 
   @override
-  InfoState get initialState {
-    add(LoadCountriesEvent());
-  }
+  InfoState get initialState => LoadingCountriesState();
 
   @override
   Stream<InfoState> mapEventToState(InfoEvent event) async*{
     if(event is LoadCountriesEvent){
       yield LoadingCountriesState();
-      countries = await api.getCountryHeaders();
+      countries = await api.getCountries();
       yield CountriesLoadedState(countries: countries);
     }
     if(event is LoadCountryEvent){
       yield LoadingCountryInfoState();
       countryInfo = await api.getCountryInfo(country: event.country);
+      print("d");
+      print(countryInfo.Deaths.toString());
+      print(countryInfo.message);
       yield CountryInfoLoadedState(countries: countries, countryInfo: countryInfo);
     }
   }
