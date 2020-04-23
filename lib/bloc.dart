@@ -22,7 +22,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     }
     if(event is LoadCountryEvent){
       yield LoadingCountryInfoState();
-      countryInfo = await api.getCountryInfo(country: event.country);
+      countryInfo = await api.getCountryInfo(country: event.country.Slug);
       yield CountryInfoLoadedState(countries: countries, countryInfo: countryInfo);
     }
   }
@@ -31,7 +31,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
 abstract class InfoEvent{}
 
 class LoadCountryEvent extends InfoEvent{
-  final String country;
+  final CountryHeader country;
   LoadCountryEvent({this.country});
 }
 

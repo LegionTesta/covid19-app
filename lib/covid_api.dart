@@ -31,7 +31,6 @@ class Covid19Api{
     String dateTime = auxTime.toIso8601String();
     dateTime = dateTime.substring(0, dateTime.length - 4);
     dateTime = dateTime + "Z";
-    print(dateTime);
     final response = await http.get(
       baseRoute + "/live/country/$country/status/confirmed/date/$dateTime",
       headers: defaultHeaders
