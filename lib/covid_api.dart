@@ -26,21 +26,17 @@ class Covid19Api{
 
   ///live/country/brazil/status/confirmed/date/2020-04-21T13:13:30Z
   Future<CountryInfo> getCountryInfo({String country}) async{
-    print("a");
     DateTime nowTime = DateTime.now();
     DateTime auxTime = DateTime(nowTime.year, nowTime.month, nowTime.day - 1);
     String dateTime = auxTime.toIso8601String();
     dateTime = dateTime.substring(0, dateTime.length - 4);
     dateTime = dateTime + "Z";
     print(dateTime);
-    print("b");
     final response = await http.get(
       baseRoute + "/live/country/$country/status/confirmed/date/$dateTime",
       headers: defaultHeaders
     );
-    print("c");
     List<dynamic> aux = json.decode(response.body);
-    print(aux.length);
     return CountryInfo.fromJson(aux[0]);
   }
 }

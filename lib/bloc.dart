@@ -23,9 +23,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     if(event is LoadCountryEvent){
       yield LoadingCountryInfoState();
       countryInfo = await api.getCountryInfo(country: event.country);
-      print("d");
-      print(countryInfo.Deaths.toString());
-      print(countryInfo.message);
       yield CountryInfoLoadedState(countries: countries, countryInfo: countryInfo);
     }
   }
