@@ -123,9 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           Container(
             height: 120,
-            child: infoCard("Total de casos em ${countryInfo.Country} (${countryInfo.CountryCode})",
-                countryInfo.Confirmed
-            ),
+            child: Row(
+              children: <Widget>[
+                infoCard("Total de casos em ${countryInfo.Country} (${countryInfo.CountryCode})",
+                    countryInfo.Confirmed
+                ),
+              ],
+            )
           ),
           Container(
             height: 120,
@@ -169,7 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Card(
         elevation: 4,
         child: ListTile(
-          dense: true,
           title: Text(value.toString(), style: cInfoCardStyle.copyWith(color: color),),
           subtitle: Text(title),
         ),
